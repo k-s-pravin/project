@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_PATIENTS 100
+
+// Define a structure for Patient
+typedef struct {
+    char name[50];
+    int age;
+    char gender;
+    char disease[100];
+    int roomNumber;
+} Patient;
+
+// Function prototypes
+void addPatient(Patient patients[], int *numPatients);
+void displayPatients(Patient patients[], int numPatients);
+
+int main() {
+    Patient patients[MAX_PATIENTS];
+    int numPatients = 0;
+    int choice;
+
+    // Main menu
+    do {
+        printf("\nHospital Management System\n");
+        printf("1. Add Patient\n");
+        printf("2. Display Patients\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addPatient(patients, &numPatients);
+                break;
+            case 2:
+                displayPatients(patients, numPatients);
+                break;
+            case 3:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice! Please enter again.\n");
+        }
+    } while (choice != 3);
+
+    return 0;
+}
+
+// Function to add a new patient
+void addPatient(Patient patients[], int *numPatients) {
+    if (*numPatients < MAX_PATIENTS) {
+        printf("\nEnter patient details:\n");
+        printf("Name: ");
+        scanf(" %[^\n]s", patients[*numPatients].name);
+        printf("Age: ");
+        scanf("%d", &patients[*numPatients].age);
+        printf("Gender (M/F): ");
+        scanf(" %c", &patients[*numPatients].gender);
+        printf("Disease: ");
+        scanf(" %[^\n]s", patients[*numPatients].disease);
+        printf("Room Number: ");
+        scanf("%d", &patients[*numPatients].roomNumber);
+        (*numPatients)++;
+        printf("Patient added successfully!\n");
+    } else {
+        printf("Maximum patient limit reached!\n");
+    }
+}
+
+// Function to display all patients
+void displayPatients(Patient patients[], int numPatients) {
+    if (numPatients == 0) {
+        printf("No patients to display.\n");
+    } else {
+        printf("\nPatient Details:\n");
+        printf("-----------------------------------------------------------------\n");
+        printf("Name\t\tAge\tGender\tDisease\t\tRoom No.\n");
+        printf("-----------------------------------------------------------------\n");
+        for (int i = 0; i < numPatients; i++) {
+            printf("%-15s\t%-3d\t%c\t%-15s\t%d\n", patients[i].name, patients[i].age, patients[i].gender, patients[i].disease, patients[i].roomNumber);
+        }
+        printf("-----------------------------------------------------------------\n");
+    }
+}
